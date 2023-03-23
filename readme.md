@@ -54,9 +54,7 @@ Vue2 实现双向绑定的原理是通过数据劫持（Data Observation）来�
 
 具体来说，当表单元素的值发生变化时，会触发对应的 input 或 change 事件，然后 Vue2 会通过绑定的 setter 方法将新的值赋给对应的 data 属性，此时又会触发数据劫持中的 setter 方法，从而通过 Watcher 对象将数据变化通知给视图进行更新。
 
-## 如何理解 JS 的异步 async await
-
-## 如何理解 Python 里的 async await
+## 如何理解 Python 里的 async await 如何理解 JS 的异步 async await
 
 ## 是否做过页面网站，使用的布局方式（说的 flex）
 
@@ -235,6 +233,20 @@ Diff 算法是一种对比算法。对比两者是旧虚拟 DOM 和新虚拟 DOM
 直接操作真实 DOM 的损耗计算：
 总损耗 = 真实 DOM 完全增删改+（可能较多的节点）排版与重绘
 
+Vue 框架中涉及到算法的部分包括虚拟 DOM 算法。虚拟 DOM 算法是 Vue 框架用于优化 DOM 操作的一种算法，它通过在 JavaScript 内部构建虚拟的 DOM 树来代替直接操作真实的 DOM 元素，从而避免频繁的重排和重绘操作，提高性能。其时间复杂度为 O(n)，其中 n 为虚拟 DOM 节点数量。
+
+### 虚拟 DOM 过程
+
+虚拟 DOM 算法的比较过程，通常称为“diff 算法”，可以分为以下几个步骤：
+
+对比新旧树的根节点，如果不同，则替换真实 DOM 中的根节点，并将新树的子树全部重新渲染到真实 DOM 中。
+
+如果新旧树的根节点相同，则对比它们的子节点。这个过程使用类似于编辑距离算法的动态规划思想，通过遍历新旧树的所有节点来计算它们之间的差异。
+
+对比后的差异以一定的规则应用到真实 DOM 树中，使其与新虚拟 DOM 树一致。
+
+通过以上步骤，Vue 框架可以高效地更新需要变化的部分，而不必重新渲染整个页面，从而提高了性能。
+
 ### Diff 算法的原理
 
 当数据改变时，会触发 setter，并且通过 Dep.notify 去通知所有订阅者 Watcher，订阅者们就会调用 patch 方法，给真实 DOM 打补丁，更新相应的视图。
@@ -263,18 +275,18 @@ Diff 算法是一种对比算法。对比两者是旧虚拟 DOM 和新虚拟 DOM
 
 ## 浏览器点击返回的底层运行逻辑是什么样的？
 
-浏览器点击返回的底层运行逻辑包括以下步骤：
-浏览器将当前页面压入历史记录栈中。
-加载历史记录栈中的前一个页面，并从缓存中读取该页面的资源（如 HTML、CSS、JS 等）。
-重建前一个页面的 DOM 树和渲染树，并执行其中的 JavaScript 代码。
-将前一个页面的渲染结果绘制到屏幕上。
+- 浏览器点击返回的底层运行逻辑包括以下步骤：
+- 浏览器将当前页面压入历史记录栈中。
+- 加载历史记录栈中的前一个页面，并从缓存中读取该页面的资源（如 HTML、CSS、JS 等）。
+- 重建前一个页面的 DOM 树和渲染树，并执行其中的 JavaScript 代码。
+- 将前一个页面的渲染结果绘制到屏幕上。
 
 ## 你认为 CompositionAPI 的优缺点在哪里？
 
-CompositionAPI 是 Vue3 中新增的一组 API，提供了一种更灵活、可组合的方式来编写组件逻辑。其优点包括：
-更灵活：与 Vue2 的 Options API 相比，Composition API 不再强制按照生命周期钩子函数的顺序编写代码，可以更自由地组织代码逻辑。
-可组合：Composition API 支持将逻辑分解为多个可重用、可组合的函数，方便代码复用和测试。
-更好的类型推断：Composition API 借助 TypeScript 的类型推断机制，能够提供更准确的类型提示。
+- CompositionAPI 是 Vue3 中新增的一组 API，提供了一种更灵活、可组合的方式来编写组件逻辑。其优点包括：
+- 更灵活：与 Vue2 的 Options API 相比，Composition API 不再强制按照生命周期钩子函数的顺序编写代码，可以更自由地组织代码逻辑。
+- 可组合：Composition API 支持将逻辑分解为多个可重用、可组合的函数，方便代码复用和测试。
+- 更好的类型推断：Composition API 借助 TypeScript 的类型推断机制，能够提供更准确的类型提示。
 
 - 可能会增加代码的复杂度和理解难度。
 
@@ -307,10 +319,6 @@ tar：打包和解压文件。
 top：监视系统进程。
 ps：列出当前系统中的进程。
 
-## 请说一个 Vue 框架中涉及到算法的部分，什么算法，算法复杂度等
-
-Vue 框架中涉及到算法的部分包括虚拟 DOM 算法。虚拟 DOM 算法是 Vue 框架用于优化 DOM 操作的一种算法，它通过在 JavaScript 内部构建虚拟的 DOM 树来代替直接操作真实的 DOM 元素，从而避免频繁的重排和重绘操作，提高性能。其时间复杂度为 O(n)，其中 n 为虚拟 DOM 节点数量。
-
 ## ES6 中 new 的过程
 
 new 实现过程
@@ -320,26 +328,9 @@ new 实现过程
 执行构造函数，为空对象添加属性
 判断构造函数的返回值是否为对象，如果是对象，就使用构造函数的返回值，否则返回创建的对象
 
-## 为什么类创建的实例不能直接使用`.**proto**`获取到原型对象？
+## 为什么类创建的实例不能直接使用`__proto__`获取到原型对象？
 
-每个工厂都可以生成许多商品，其中这个商品属于某个工厂的这个标识存在 proto 中，但是如果逻辑上你通过商品拿到了这个工厂本身，然后把工厂破坏掉了，这样会影响到所有的商品。
-
-**proto** 并不是语言本身的特性，这是各大厂商具体实现时添加的私有属性，虽然目前很多现代浏览器的 JS 引擎中都提供了这个私有属性，但依旧不建议在生产中使用该属性，避免对环境产生依赖。生产环境中，我们可以使用 Object.getPrototypeOf() 方法来获取实例对象的原型，然后再来为原型添加方法/属性。
-
-```js
-var p1 = new Point(2,3);
-var p2 = new Point(3,2);
-
-p1.**proto**.printName = function () { return 'Oops' };
-
-p1.printName() // "Oops"
-p2.printName() // "Oops"
-
-var p3 = new Point(4,2);
-p3.printName() // "Oops"
-```
-
-- 上面代码在 p1 的原型上添加了一个 printName()方法，由于 p1 的原型就是 p2 的原型，因此 p2 也可以调用这个方法。而且，此后新建的实例 p3 也可以调用这个方法。这意味着，使用实例的**proto**属性改写原型，必须相当谨慎，不推荐使用，因为这会改变“类”的原始定义，影响到所有实例。
+在 JavaScript 中，类通过原型和构造函数实现。每个对象都有一个内部属性 [[Prototype]]（即原型），可以使用 Object.getPrototypeOf() 方法获取。proto 属性是指向当前对象的原型的非标准私有属性，应该避免直接使用它来修改原型对象，因为这可能会对所有实例对象产生影响，并且与规范不符。在生产环境中，优先使用标准方法 Object.getPrototypeOf() 获取实例对象的原型，然后再为原型对象添加属性或方法。原型是实现继承机制的基础，访问最顶层原型可以使用 Object.prototype。理解和掌握原型概念对编写高效、可靠的 JavaScript 代码非常重要。
 
 ## ES6 的对象静态方法：
 
@@ -364,3 +355,181 @@ https://www.ruanyifeng.com/blog/2017/11/2fa-tutorial.html
 ## Promise Generator 和回调函数实现异步的区别
 
 ## 对象中什么不可枚举？什么可以枚举？如何创建一个不可枚举的属性?
+
+## Object.fromEntries()?
+
+ES2019 中新增的方法，它可以将一个键值对数组转换成一个对象。
+
+具体来说，Object.fromEntries() 接收一个包含若干个键值对的数组，每个键值对都是一个长度为 2 的数组，第一个元素表示属性名，第二个元素表示属性值。方法将这些键值对转换成一个新的对象，并返回该对象。
+
+下面是一个例子：
+
+```js
+const entries = [
+  ["foo", 1],
+  ["bar", 2],
+];
+const obj = Object.fromEntries(entries);
+
+console.log(obj); // { foo: 1, bar: 2 }
+```
+
+在上面的例子中，通过将 entries 数组传递给 Object.fromEntries() 方法，得到了一个包含 foo 和 bar 两个属性的新对象 obj。
+
+需要注意的是，如果 entries 数组中存在重复的属性名，则后面的值会覆盖前面的值，例如：
+
+```js
+const entries = [
+  ["foo", 1],
+  ["bar", 2],
+  ["foo", 3],
+];
+const obj = Object.fromEntries(entries);
+
+console.log(obj); // { foo: 3, bar: 2 }
+```
+
+在上面的例子中，entries 数组中存在两个 foo 属性，但是最终生成的对象中只有一个 foo 属性，其值为 3。
+
+## 说说 Vue.js 中的 v-cloak 指令
+
+可以使用 v-cloak 指令设置样式，这些样式会在 Vue 实例编译结束时，从绑定的 HTML 元素上被移除。
+
+当网络较慢，网页还在加载 Vue.js ，而导致 Vue 来不及渲染，这时页面就会显示出 Vue 源代码。我们可以使用 v-cloak 指令来解决这一问题。
+
+```html
+<div id="app">{{context}}</div>
+```
+
+```js
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            context:'互联网头部玩家钟爱的健身项目'
+        }
+    });
+</script>
+```
+
+我们使用 v-cloak 指令来解决屏幕闪动的问题吧 O(∩_∩)O~
+
+js 不变，在 div 中加入 v-cloak 指令。
+
+```html
+<div id="app" v-cloak>{{context}}</div>
+```
+
+```css
+[v-cloak] {
+  display: none;
+}
+```
+
+使用 v-cloak 指令之后的效果（demo）：
+
+在简单项目中，使用 v-cloak 指令是解决屏幕闪动的好方法。但在大型、工程化的项目中（webpack、vue-router）只有一个空的 div 元素，元素中的内容是通过路由挂载来实现的，这时我们就不需要用到 v-cloak 指令咯。
+
+## 路由挂载
+
+## WEB 应用从服务器主动推送 Data 到客户端有那些方式？
+
+- HTML5 WebSocket
+  HTML5 WebSocket 是一种基于 TCP 协议的全双工通信协议。通过浏览器建立 WebSocket 连接后，服务器可以主动向客户端推送数据。
+
+- WebSocket 通过 Flash
+  在不支持 HTML5 WebSocket 的浏览器环境下，可以通过引入 Flash 插件实现 WebSocket 功能。Flash 可以利用 Socket 类与服务器建立连接，并通过 ActionScript 代码调用 JavaScript 接口，实现浏览器与服务端的双向通信。
+
+- XHR 长时间连接
+  XHR 长时间连接是指通过 XMLHttpRequest 对象发送一个长期挂起的请求，直到服务器有数据更新时才返回响应结果。客户端收到响应后，可以通过 JavaScript 代码再次发送一个新的请求，保持长时间连接。
+
+- XHR Multipart Streaming
+  XHR Multipart Streaming 是一种基于 HTTP 的流媒体传输技术。服务器向客户端发送多个 HTTP 响应，每次发送一部分数据，在客户端脚本中通过 XMLHTTPRequest 对象逐步解析这些数据。
+
+- 不可见的 Iframe
+  不可见的 Iframe 是一种通过添加一个隐藏的 iframe 元素来实现推送的方式。在服务器端将内容写入 iframe 中的 body 标签，并通过 JavaScript 控制 iframe 的高度，从而实现 DOM 更新和消息推送。
+
+- \<script> 标签的长时间连接(可跨域)
+
+  \<script> 标签的长时间连接是指利用 script 标签的 src 属性与服务器建立一个长时间挂起的请求。服务器返回的响应是一段 JavaScript 代码，客户端通过执行这段代码来获取数据并更新页面。由于 script 标签的跨域特性，这种方式可以实现跨域推送数据。
+
+## 完整的路由解析过程
+
+1、导航被触发
+2、在失活的组件里调用离开守卫
+3、调用全局的 beforeEach 守卫
+4、在重用的组件里调用 beforeRouteUpdate 守卫
+5、在路由配置里调用 beforEnter
+6、解析异步路由组件
+7、在被激活的组件里调用 beforeRouteEnter
+8、调用全局的 beforeResolve 守卫
+9、导航被确认
+10、调用全局的 afterEach 钩子
+11、触发 DOM 更新
+12、在创建好的实例调用 beforeRouteEnter 守卫中传给 next 的回调函数
+
+## 完成一个路由拦截登录：
+
+```js
+import Vue from "vue";
+import Router from "vue-router";
+
+Vue.use(Router);
+
+const router = new Router({
+  routes: [
+    {
+      path: "/",
+
+      component: (resolve) => {
+        require(["../components/Home"], resolve);
+      },
+    },
+    {
+      path: "/record",
+      name: "record",
+      component: (resolve) => {
+        require(["../components/Record"], resolve);
+      },
+    },
+    {
+      path: "/Register",
+      name: "Register",
+      component: (resolve) => {
+        require(["../components/Register"], resolve);
+      },
+    },
+    {
+      path: "/Luck",
+      name: "Luck",
+      // 需要登录才能进入的页面可以增加一个 meta 属性
+      meta: {
+        requireAuth: true,
+      },
+      component: (resolve) => {
+        require(["../components/luck28/Luck"], resolve);
+      },
+    },
+  ],
+});
+// 判断是否需要登录权限 以及是否登录
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((res) => res.meta.requireAuth)) {
+    // 判断是否需要登录权限
+    if (localStorage.getItem("username")) {
+      // 判断是否登录
+      next();
+    } else {
+      // 没登录则跳转到登录界面
+      next({
+        path: "/Register",
+        query: { redirect: to.fullPath },
+      });
+    }
+  } else {
+    next();
+  }
+});
+
+export default router;
+```

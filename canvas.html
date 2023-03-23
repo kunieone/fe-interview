@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>十条线，每一个都能被移动</title>
+  </head>
+  <body>
+    <canvas id="myCanvas" width="500" height="500"></canvas>
+    <script>
+      const canvas = document.getElementById("myCanvas");
+      const ctx = canvas.getContext("2d");
+
+      const curves = [
+        {
+          color: "red",
+          start: { x: 50, y: 50 },
+          end: { x: 250, y: 250 },
+        },
+        {
+          color: "green",
+          start: { x: 300, y: 100 },
+          end: { x: 450, y: 150 },
+        },
+        {
+          color: "blue",
+          start: { x: 50, y: 400 },
+          end: { x: 250, y: 400 },
+        },
+        {
+          color: "purple",
+          start: { x: 300, y: 350 },
+          end: { x: 450, y: 400 },
+        },
+        {
+          color: "orange",
+          start: { x: 50, y: 100 },
+          end: { x: 150, y: 250 },
+        },
+        {
+          color: "cyan",
+          start: { x: 400, y: 50 },
+          end: { x: 350, y: 250 },
+        },
+        {
+          color: "magenta",
+          start: { x: 100, y: 450 },
+          end: { x: 200, y: 300 },
+        },
+        {
+          color: "yellow",
+          start: { x: 400, y: 400 },
+          end: { x: 300, y: 200 },
+        },
+        {
+          color: "brown",
+          start: { x: 50, y: 250 },
+          end: { x: 150, y: 150 },
+        },
+        {
+          color: "gray",
+          start: { x: 350, y: 450 },
+          end: { x: 450, y: 300 },
+        },
+      ];
+
+      function drawCurves() {
+        for (let i = 0; i < curves.length; i++) {
+          const curve = curves[i];
+          ctx.beginPath();
+          ctx.strokeStyle = curve.color;
+          ctx.moveTo(curve.start.x, curve.start.y);
+          ctx.lineTo(curve.end.x, curve.end.y);
+          ctx.stroke();
+        }
+      }
+
+      let selectedCurve = curves[0];
+      let isDragging = false;
+
+      function onMouseDown(event) {
+        const mouseX = event.clientX - canvas.offsetLeft;
+        const mouseY = event.clientY - canvas.offsetTop;
+
+        for (let i = 0; i < curves.length; i++) {
+          const curve = curves[i];
+          if (
+            mouseX > Math.min(curve.start.x, curve.end.x) &&
+            mouseX < Math.max(curve.start.x, curve.end.x) &&
+            mouseY > Math.min(curve.start.y, curve.end.y) &&
+            mouseY < Math.max(curve.start.y, curve.end.y)
+          ) {
+            selectedCurve = curve;
+            isDragging = true;
+            break;
+          }
+        }
+      }
+
+      function onMouseUp() {
+        isDragging = false;
+      }
+      function onMouseMove(event) {
+        if (!isDragging) return;
+        const dx = event.clientX - canvas.offsetLeft - selectedCurve.start.x;
+        const dy = event.clientY - canvas.offsetTop - selectedCurve.start.y;
+        selectedCurve.start.x += dx;
+        selectedCurve.start.y += dy;
+        selectedCurve.end.x += dx;
+        selectedCurve.end.y += dy;
+        redraw();
+      }
+
+      function redraw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawCurves();
+      }
+
+      canvas.addEventListener("mousedown", onMouseDown);
+      canvas.addEventListener("mouseup", onMouseUp);
+      canvas.addEventListener("mousemove", onMouseMove);
+
+      drawCurves();
+    </script>
+  </body>
+</html>

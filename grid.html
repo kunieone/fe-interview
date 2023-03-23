@@ -1,0 +1,37 @@
+<html>
+  <div class="container">
+    <div class="item item-a">A</div>
+    <div class="item item-b">B</div>
+    <div class="item item-c">C</div>
+    <div class="item item-d">D</div>
+  </div>
+</html>
+<style>
+  .item {
+    background-color: antiquewhite;
+    width: 120px;
+    height: 120px;
+  }
+  .item-a {
+    grid-area: header;
+  }
+  .item-b {
+    grid-area: main;
+  }
+  .item-c {
+    grid-area: sidebar;
+  }
+  .item-d {
+    grid-area: footer;
+  }
+  .container {
+    width: 300px;
+    height: 300px;
+    display: grid;
+    grid-template-columns: 50px 50px 50px 50px;
+    grid-template-rows: auto;
+    grid-template-areas:
+      "header header header header" "main main . sidebar"
+      "footer footer footer footer";
+  }
+</style>
