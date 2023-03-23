@@ -1,0 +1,11 @@
+{
+  "name": "fe-interview",
+  "version": "1.0.0",
+  "description": "## 如何理解面向对象和函数式编程",
+  "main": "read.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
