@@ -1,0 +1,27 @@
+<html>
+  <ul id="list">
+    <li>red</li>
+    <li>yellow</li>
+    <li>blue</li>
+  </ul>
+</html>
+<script>
+  const d = document.querySelector("li:nth-child(2)");
+
+  d.addEventListener("click", () => console.log(1));
+  setTimeout(() => {
+    d.addEventListener("click", () => console.log(3));
+  }, 0);
+  queueMicrotask(() => {
+    d.addEventListener("click", () => console.log(2));
+  });
+
+  d.addEventListener("click", () => console.log(4));
+  (function () {
+    d.addEventListener("click", showColor, false);
+    function showColor(e) {
+      var x = e.target;
+      alert("The color is " + x.innerHTML);
+    }
+  })();
+</script>
