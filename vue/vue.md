@@ -126,15 +126,26 @@ ViewModel 在实现上通常使用双向数据绑定技术来与 View 进行交�
 
 ```js
 // Vue.set
-Vue.set(vm.items, indexOfItem, newValue)
+Vue.set(vm.items, indexOfItem, newValue);
 // vm.$set，Vue.set的一个别名
-vm.$set(vm.items, indexOfItem, newValue)
+vm.$set(vm.items, indexOfItem, newValue);
 // Array.prototype.splice
-vm.items.splice(indexOfItem, 1, newValue)复制代码为了解决第二个问题，Vue 提供了以下操作方法：
+vm.items.splice(indexOfItem, 1, newValue);
+//为了解决第二个问题，Vue 提供了以下操作方法：
 // Array.prototype.splice
-vm.items.splice(newLength)复制代码
+vm.items.splice(newLength);
 ```
 
 ### Vue3 对这个问题有什么修复？
 
 在 Vue 3 中，Vue 引入了 Proxy 对象来代替了 Vue 2 中的 Object.defineProperty，这样 Vue 就可以更好地跟踪数组项的变化。因此，直接给一个数组项赋值，Vue 3 能够检测到变化并及时更新视图。不再需要使用 Vue.set、vm.$set 或 Array.prototype.splice 等方法来手动触发更新。
+
+## CSS 样式穿透
+
+需要注意：
+
+```md
+( >>> 只作用于 css
+::v-deep 只作用于 sass
+/deep/ 只作用于 less
+```
