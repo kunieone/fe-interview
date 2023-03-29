@@ -437,6 +437,7 @@ const router = new Router({
     },
   ],
 });
+
 // 判断是否需要登录权限 以及是否登录
 router.beforeEach((to, from, next) => {
   if (to.matched.some((res) => res.meta.requireAuth)) {
@@ -458,3 +459,144 @@ router.beforeEach((to, from, next) => {
 
 export default router;
 ```
+
+## 由易到难，高频到低频。
+
+HTML、CSS、JS 基础知识
+
+flex: 0 1 auto 是什么意思？
+css 有哪些伪元素选择器
+HTML5 语义化标签有哪些？
+闭包编程题
+手写 Promise 实现
+手写 requestCache 实现
+同步异步、微任务宏任务
+深拷贝
+
+生命周期钩子函数
+如何获取原始 DOM
+如何获取虚拟 DOM
+原理是什么？如何实现？
+对 diff 的理解
+数据双向绑定如何实现？兼容性？
+状态管理、组件通信
+路由跳转
+ElementUI、antd 基本框架搭配 UI 库
+
+组件化开发
+源码理解程度
+能力熟悉程度
+浏览器基本知识
+
+浏览器缓存原理
+本地存储
+基本能力（上传、下载）
+
+## Vue2 和 Vue3 的区别
+
+1. main.js 不同，vue2 和 vue3 的 vue 实例挂载方式不一样。
+2. 父子传参不同，vue2：父传子，用 props,子传父用事件 Emitting Events。在 vue2 中，会调用 this.$emit 然后传入事件名和对象。vue3：父传子，用 props,子传父用事件 Emitting Events。在 vue3 中的 setup()中的第二个参数 content 对象中就有 emit，那么我们只要在 setup()接收第二个参数中使用分解对象法取出 emit 就可以在 setup 方法中随意使用了。
+3. vue3 支持 Fragment。也就是有多个根节点
+4. vue3 可以使用组合式 api，也就是逻辑写在 setup 函数，相比于旧的 api 使用属性来分组，这样代码会更加简便和整洁。
+5. 生命周期钩子函数不同。Vue2--------------vue3
+
+- beforeCreate -> setup()
+- created -> setup()
+- beforeMount -> onBeforeMount
+- mounted -> onMounted
+- beforeUpdate -> onBeforeUpdate
+- updated -> onUpdated
+- beforeDestroy -> onBeforeUnmount
+- destroyed -> onUnmounted
+- activated -> onActivated
+- deactivated -> onDeactivated
+- errorCaptured -> onErrorCaptured
+
+## 箭头函数和 function 函数的区别
+
+首先说一下箭头函数的一些特殊用法：
+
+1. 不需要返回值，但是省略大括号：
+   `let fn = () => void doesNotReturn();`
+2. 返回对象，但是防止歧义：
+   `let getTempItem = id => ({ id: id, name: "Temp" });`
+3. 箭头函数不会创建自己的 this
+4. 箭头函数继承而来的 this 指向永远不变（重要！！深入理解！！）
+5. .call()/.apply()/.bind()无法改变箭头函数中 this 的指向
+6. ### 箭头函数不能作为构造函数使用 了解一下构造函数的 new 都做了些什么？简单来说，分为四步：
+   ① JS 内部首先会先生成一个对象；
+   ② 再把函数中的 this 指向该对象；
+   ③ 然后执行构造函数中的语句；
+   ④ 最终返回该对象实例。
+   但是！！因为箭头函数没有自己的 this，它的 this 其实是继承了外层执行环境中的 this，且 this 指向永远不会随在哪里调用、被谁调用而改变，所以箭头函数不能作为构造函数使用，或者说构造函数不能定义成箭头函数，否则用 new 调用时会报错！ 7.箭头函数没有自己的 arguments
+7. 箭头函数没有原型 prototype
+
+## Object.is()
+
+用于判断两个值是否相等。它与 === 运算符类似，但对于 NaN 的比较有所不同。Object.is() 认为 NaN 等于 NaN，而 === 则不认为它们相等
+
+## null vs undefined
+
+null 表示"没有对象"，即该处不应该有值。
+undefined 表示"缺少值"，就是此处应该有一个值，但是还没有定义。
+
+## `object["someAttr"]`和 `object.someAttr` 的区别
+
+1. 属性名称限制
+2. 括号表示法的动态性
+
+## Symbol 的使用场景
+
+1. 框架作者防止自己的库写的一些属性方法被覆盖，使用 Symbol 作为属性
+2. 消除魔术字符串，或者说用作枚举
+3. 作为对象的私有方法
+
+## JS 数据类型判断的九种方式
+
+1. typeof
+2. instanceof
+3. constructor
+4. Number.isNaN
+5. Array.isArray
+6. 与固定值进行比较
+7. Object.prototype.toString
+8. Object.prototype.isPrototypeOf：和 instanceof 类似
+
+## for...of 循环可以使用的范围包括：
+
+- 数组
+- Set
+- Map
+- arguments 对象、DOM NodeList 对象
+- Generator 对象
+- 字符串
+
+## HTTP2
+
+HTTP/2（超文本传输协议第 2 版，最初命名为 HTTP 2.0），简称为 h2（基于 TLS/1.2 或以上版本的加密连接）或 h2c（非加密连接），是 HTTP 协议的的第二个主要版本，使用于万维网。
+
+## 旧版本问题
+
+多个 TCP 连接：虽然 HTTP/1.1 管线化可以支持请求并发，但是浏览器很难实现，主流浏览器厂商都禁用了管线化
+队头阻塞：TCP 连接上只能发送一个请求，由于单连接上的串行请求，前面的请求未完成前，后续的请求都在排队等待
+头部冗余：HTTP/1.x 采用文本格式传输，首部未压缩，无状态特性让每个请求都会带上 Cookie、User-Agent 等重复的信息
+不支持服务端主动推送：HTTP/1.1 不支持服务推送消息，只能使用轮询的方式解决
+新特性
+在了解 HTTP/2 新特性前，可以通过 DEMO 直观感受 HTTP/1.1 与 HTTP/2 的差距：
+
+HTTP/2: the Future of the Internet | Akamai
+
+## 主要新特性
+
+传输数据量大量减少
+二进制分帧
+标头压缩
+多路复用及相关功能
+多路复用
+优先级与依赖性
+服务器消息推送
+服务器推送
+其他
+重置流
+流量控制
+HTTPS RFC 规范并没有要求 HTTP2 强制使用 TLS，但是目前世界所有浏览器和服务器实现都基于 HTTPS 来实现 HTTP2
