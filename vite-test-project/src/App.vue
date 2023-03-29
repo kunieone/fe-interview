@@ -4,11 +4,13 @@
     <button @click="start">开始计时</button>
     <button @click="stop">停止计时</button>
   </div>
+  <ReactiveExample />
+  ReactiveExample
 </template>
 
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue";
-
+import ReactiveExample from "./ReactiveExample.vue";
 const count = ref(0);
 let startTime;
 let timerId;

@@ -8,7 +8,4 @@ function closure() {
 
 const a = closure();
 
-
-
-
 a();
