@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>左右折返移动</title>
+    <style>
+      #movingObject {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        background-color: blue;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="movingObject"></div>
+    <script>
+      const movingObject = document.getElementById("movingObject");
+      const objectWidth = movingObject.offsetWidth;
+      let screenWidth = window.innerWidth;
+      const maxPosition = screenWidth - objectWidth;
+
+      let position = 0;
+      let direction = 1; // 1 表示向右，-1 表示向左
+
+      function moveObject() {
+        position += direction * 5; // 移动速度
+
+        if (position >= maxPosition) {
+          direction = -1; // 到达屏幕右侧时，改变方向
+        } else if (position <= 0) {
+          direction = 1; // 到达屏幕左侧时，改变方向
+        }
+
+        movingObject.style.left = position + "px";
+        requestAnimationFrame(moveObject);
+      }
+      requestAnimationFrame(moveObject);
+    </script>
+  </body>
+</html>

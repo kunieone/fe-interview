@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS节流方法</title>
+  </head>
+  <body>
+    <button onclick="console.log(1)" class="btn">点击</button>
+    <style>
+      @keyframes throttle {
+        from {
+          background-color: red;
+          pointer-events: none;
+        }
+        to {
+          background-color: green;
+          pointer-events: all;
+        }
+      }
+
+      button {
+        animation: throttle 2s step-end forwards;
+      }
+      button:active {
+        animation: none;
+      }
+      @keyframes throttle {
+        from {
+          pointer-events: none;
+        }
+        to {
+          pointer-events: all;
+        }
+      }
+    </style>
+  </body>
+</html>
